@@ -60,3 +60,24 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);
 });
+
+app.delete('/api/notes/:id', (req, res) => {
+  const noteId = req.params.id;
+
+  fs.readFile(path.join(__dirname, 'db/db.json'), 'utf8', (err, data) => {
+    if (err) {
+      console.error("Error reading notes:", err);
+      return res.status(500).json({ error: 'Unable to read notes' });
+    }
+    const notes = JSON.parse(data);
+    const updatedNotes = notes.filter(note => note.id !== noteId);
+
+    fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(updatedNotes, null, 2), (err) => {
+      if (err) {
+        console.error("Error saving note:", err);
+        return res.status(500).json({ error: 'Unable to save notes' });
+      }
+      res.json({ message: 'Note deleted successfully' });
+    });
+  });
+});
