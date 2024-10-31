@@ -5,8 +5,16 @@ body {
   padding: 0;
 }
 
-.save-note, .new-note, .clear-btn {
-  display: none;
+.btn.clear-btn {
+  margin-left: 10px; /* Adjust spacing if needed */
+}
+
+.btn.save-note {
+  display: inline-block; /* Ensure both buttons are inline */
+}
+
+.btn.clear-btn {
+  display: inline-block; /* Ensure Clear Form button is also inline */
 }
 
 .icons {
@@ -75,4 +83,9 @@ body {
   border-right: none;
   padding: 20px;
   cursor: pointer;
+}
+
+.delete-note {
+  cursor: pointer;
+  margin-left: 10px;
 }
