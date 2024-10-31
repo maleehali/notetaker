@@ -87,5 +87,5 @@ body {
 
 .delete-note {
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 10px; /* Adjust as needed for spacing */
 }

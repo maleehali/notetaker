@@ -99,20 +99,19 @@ const renderNoteList = (notes) => {
     span.innerText = note.title;
     span.addEventListener('click', handleNoteView); // View note on click
 
-    // Add delete icon
+    // Create delete icon (trash can)
     const delBtn = document.createElement('i');
     delBtn.classList.add('fas', 'fa-trash-alt', 'float-right', 'text-danger', 'delete-note');
     delBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      handleNoteDelete(note.id);
+      e.stopPropagation(); // Prevents clicking the delete icon from opening the note
+      handleNoteDelete(note.id); // Deletes the note
     });
 
-     // Append the title span and delete icon to the list item
-     li.appendChild(span);
-     li.appendChild(delBtn);
-     li.addEventListener('click', handleNoteView);
+      // Append the title span and delete icon to the list item
+    li.appendChild(span);
+    li.appendChild(delBtn);
 
-    // Append the list item to the note list container
+    // Add the list item to the note list container
     noteList.appendChild(li);
   });
 };
@@ -130,16 +129,18 @@ const handleNoteView = (event) => {
 };
 
 // Delete a note from the server
-const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
+const deleteNote = (id) => {
+  return fetch(`/api/notes/${id}`, {
     method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' }
   });
+};
 
 // Function to delete a note
 const handleNoteDelete = (id) => {
   deleteNote(id).then(() => {
-    renderActiveNote(); // Clear the note editor if the deleted note was active
+    getAndRenderNotes(); // Refreshes the note list after deletion
+    renderActiveNote(); // Clears the note editor if the deleted note was active
   });
 };
 
